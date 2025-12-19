@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why We Use Calculus - Complete Guide</title>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 3em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.3em;
+            margin-bottom: 50px;
+        }
+        
+        .intro {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #6366f1;
+        }
+        
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .example-card {
+            border: 3px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: white;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .example-card.differentiation {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+        
+        .example-card.integration {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+        
+        .example-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .example-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .example-card p {
+            line-height: 1.6;
+            color: #4a5568;
+        }
+        
+        .example-card .category {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .category.diff {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .category.int {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .concepts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .concept-box {
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid;
+        }
+        
+        .concept-box.differentiation {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-color: #ef4444;
+        }
+        
+        .concept-box.integration {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-color: #3b82f6;
+        }
+        
+        .concept-box h2 {
+            margin-top: 0;
+            font-size: 2em;
+        }
+        
+        .concept-box ul {
+            line-height: 2;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+        
+        .footer p {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .print-button {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .print-button:hover {
+            background: #4f46e5;
+            transform: scale(1.05);
+        }
+        
+        @media print {
+            .print-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Why Do We Use Calculus?</h1>
+        <p class="subtitle">Interactive Examples Showing Real-World Applications</p>
+        
+        <div class="intro">
+            <h2 style="margin-top: 0;">🎯 Understanding Calculus Through Real Examples</h2>
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                Calculus isn't just abstract mathematics—it's the language of change and accumulation. 
+                This guide shows you <strong>why</strong> we use differentiation and integration through 
+                four practical, real-world examples. Each example is on a separate page that you can 
+                print for study or reference.
+            </p>
+        </div>
+        
+        <div class="concepts">
+            <div class="concept-box differentiation">
+                <h2>📉 Differentiation</h2>
+                <p><strong>Breaks things down to find rates of change</strong></p>
+                <ul>
+                    <li>Finds instantaneous rate of change</li>
+                    <li>Calculates slope at a point</li>
+                    <li>Answers: "How fast is it changing?"</li>
+                    <li>Symbol: d/dx or f'(x)</li>
+                </ul>
+                <p style="margin-top: 20px;"><strong>Real Applications:</strong></p>
+                <ul>
+                    <li>Speedometers (position → velocity)</li>
+                    <li>Business optimization (revenue → marginal revenue)</li>
+                    <li>Machine learning (cost → gradient)</li>
+                    <li>Physics (position → velocity → acceleration)</li>
+                </ul>
+            </div>
+            
+            <div class="concept-box integration">
+                <h2>📈 Integration</h2>
+                <p><strong>Builds things up to find totals</strong></p>
+                <ul>
+                    <li>Finds total accumulated value</li>
+                    <li>Calculates area under curves</li>
+                    <li>Answers: "What's the total?"</li>
+                    <li>Symbol: ∫ f(x) dx</li>
+                </ul>
+                <p style="margin-top: 20px;"><strong>Real Applications:</strong></p>
+                <ul>
+                    <li>GPS (velocity → position)</li>
+                    <li>Area calculations (curve → area)</li>
+                    <li>Probability (PDF → probability)</li>
+                    <li>Physics (force → work, velocity → distance)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2 style="text-align: center; margin: 50px 0 30px 0; font-size: 2.5em;">📚 Four Real-World Examples</h2>
+        
+        <div class="examples-grid">
+            <a href="1_motion_differentiation.html" target="_blank">
+                <div class="example-card differentiation">
+                    <div class="icon">🚗</div>
+                    <span class="category diff">DIFFERENTIATION</span>
+                    <h3>Motion: Position → Velocity</h3>
+                    <p>
+                        How does your car's speedometer work? Learn how differentiation 
+                        converts position data into instantaneous velocity—the foundation 
+                        of motion analysis.
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold; color: #ef4444;">
+                        Click to open example →
+                    </p>
+                </div>
+            </a>
+            
+            <a href="2_economics_differentiation.html" target="_blank">
+                <div class="example-card differentiation">
+                    <div class="icon">💰</div>
+                    <span class="category diff">DIFFERENTIATION</span>
+                    <h3>Economics: Revenue → Marginal Revenue</h3>
+                    <p>
+                        Should a business produce one more unit? Discover how companies 
+                        use differentiation to find marginal revenue and optimize their 
+                        production decisions.
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold; color: #ef4444;">
+                        Click to open example →
+                    </p>
+                </div>
+            </a>
+            
+            <a href="3_area_integration.html" target="_blank">
+                <div class="example-card integration">
+                    <div class="icon">📐</div>
+                    <span class="category int">INTEGRATION</span>
+                    <h3>Geometry: Function → Area</h3>
+                    <p>
+                        How do you find the area under a curved line? See how integration 
+                        solves this ancient problem and enables calculations in physics, 
+                        probability, and engineering.
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold; color: #3b82f6;">
+                        Click to open example →
+                    </p>
+                </div>
+            </a>
+            
+            <a href="4_gps_integration.html" target="_blank">
+                <div class="example-card integration">
+                    <div class="icon">📍</div>
+                    <span class="category int">INTEGRATION</span>
+                    <h3>GPS: Velocity → Position</h3>
+                    <p>
+                        How does your phone know where you are? Explore how GPS and 
+                        navigation systems use integration to accumulate velocity data 
+                        into position information.
+                    </p>
+                    <p style="margin-top: 15px; font-weight: bold; color: #3b82f6;">
+                        Click to open example →
+                    </p>
+                </div>
+            </a>
+        </div>
+        
+        <button class="print-button no-print" onclick="window.print()">
+            🖨️ Print This Index Page
+        </button>
+        
+        <div class="footer">
+            <h2 style="color: #2d3748;">💡 Key Insight</h2>
+            <p>
+                <strong>Differentiation and Integration are Inverse Operations</strong>
+            </p>
+            <p>
+                Differentiation breaks things down (finding rates of change), 
+                while integration builds them back up (finding totals). Together, 
+                they form the foundation of calculus and enable us to understand 
+                and model the changing world around us.
+            </p>
+            <div style="margin-top: 30px; font-size: 1.5em;">
+                📉 Differentiation ⇄ Integration 📈
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Add hover effect information
+        document.querySelectorAll('.example-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'A') {
+                    window.open(this.querySelector('a').href, '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

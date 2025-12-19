@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus - GPS Navigation (Integration)</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f7fafc;
+        }
+        
+        .explanation {
+            background: linear-gradient(135deg, #fce7f315 0%, #fbcfe815 100%);
+            border-left: 5px solid #ec4899;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .explanation h2 {
+            color: #2d3748;
+            margin-top: 0;
+        }
+        
+        .formula {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .key-point {
+            background: #fce7f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #ec4899;
+        }
+        
+        .gps-example {
+            background: #dbeafe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #3b82f6;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .color-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .process-flow {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f0fdf4;
+            border-radius: 10px;
+        }
+        
+        .process-box {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #86efac;
+            text-align: center;
+        }
+        
+        .process-arrow {
+            font-size: 3em;
+            color: #22c55e;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #ec4899;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📍 GPS Navigation: Velocity → Position</h1>
+        <p class="subtitle">How Your Phone Knows Where You Are Using Integration</p>
+        
+        <div class="explanation">
+            <h2>📚 The Navigation Problem</h2>
+            <p>Imagine you're driving with cruise control at a constant 5 meters per second (about 11 mph). You know your speed, but where are you after 10 seconds? After 1 minute?</p>
+            <p>Your GPS needs to figure out your <strong>position</strong> by accumulating your <strong>velocity</strong> over time.</p>
+            <p><strong>This is integration in action!</strong></p>
+        </div>
+        
+        <div class="formula">
+            <strong>Velocity Function:</strong> v(t) = 5 m/s (constant)
+        </div>
+        
+        <div class="color-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ec4899;"></div>
+                <span><strong>Velocity (m/s)</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #06b6d4;"></div>
+                <span><strong>Position (meters)</strong></span>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div id="gpsGraph"></div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🎯 What's Happening?</h2>
+            <p><strong style="color: #ec4899;">Pink Line (Velocity):</strong> Shows constant speed of 5 m/s. This is what your speedometer shows!</p>
+            
+            <p><strong style="color: #06b6d4;">Cyan Line (Position):</strong> Shows where you are. This increases linearly because you're moving at constant speed.</p>
+            
+            <div class="formula">
+                <strong>Integrating Velocity:</strong><br><br>
+                s(t) = ∫ v(t) dt = ∫ 5 dt<br><br>
+                s(t) = 5t + C
+            </div>
+            
+            <p>If we start at position 0 (so C = 0):</p>
+            <div class="formula">
+                s(t) = 5t
+            </div>
+            
+            <h3>Reading the Graph:</h3>
+            <ul>
+                <li>At t = 0 seconds: position = 0 meters (starting point)</li>
+                <li>At t = 5 seconds: position = 25 meters</li>
+                <li>At t = 10 seconds: position = 50 meters</li>
+                <li>The position is the <strong>accumulated distance</strong> traveled</li>
+            </ul>
+        </div>
+        
+        <div class="process-flow">
+            <div class="process-box">
+                <h3 style="color: #ec4899;">Know: Velocity</h3>
+                <p>v(t) = 5 m/s</p>
+                <p>📱 From sensors</p>
+            </div>
+            <div class="process-arrow">→<br>∫</div>
+            <div class="process-box">
+                <h3 style="color: #06b6d4;">Find: Position</h3>
+                <p>s(t) = 5t</p>
+                <p>📍 Your location!</p>
+            </div>
+        </div>
+        
+        <div class="gps-example">
+            <h3>📱 How Real GPS Works</h3>
+            <p><strong>Your phone doesn't just use one method - it combines multiple inputs:</strong></p>
+            <ol style="line-height: 2;">
+                <li><strong>Satellites:</strong> Provide absolute position (trilateration)</li>
+                <li><strong>Accelerometer:</strong> Measures acceleration → integrate once → velocity</li>
+                <li><strong>Gyroscope:</strong> Measures rotation rate → integrate → orientation</li>
+                <li><strong>Velocity:</strong> Integrate to get position between satellite updates</li>
+            </ol>
+            <p>When satellite signal is weak (tunnels, buildings), your phone uses <strong>dead reckoning</strong>: it integrates your velocity to estimate where you've moved!</p>
+        </div>
+        
+        <div class="explanation">
+            <h2>📊 Distance Table</h2>
+            <p>Let's see how position accumulates over time:</p>
+            <table>
+                <tr>
+                    <th>Time (seconds)</th>
+                    <th>Velocity (m/s)</th>
+                    <th>Position (meters)</th>
+                    <th>Calculation</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>0</td>
+                    <td>5 × 0 = 0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>5</td>
+                    <td>10</td>
+                    <td>5 × 2 = 10</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>20</td>
+                    <td>5 × 4 = 20</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>5</td>
+                    <td>30</td>
+                    <td>5 × 6 = 30</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>5</td>
+                    <td>40</td>
+                    <td>5 × 8 = 40</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>50</td>
+                    <td>5 × 10 = 50</td>
+                </tr>
+            </table>
+            <p><strong>Pattern:</strong> Position = Velocity × Time (for constant velocity)</p>
+        </div>
+        
+        <div class="key-point">
+            <h3>💡 Variable Velocity Example</h3>
+            <p>What if velocity isn't constant? Let's say v(t) = 3t (accelerating)</p>
+            <div class="formula">
+                s(t) = ∫ 3t dt = (3t²)/2 + C
+            </div>
+            <p>Starting from position 0:</p>
+            <div class="formula">
+                s(t) = 1.5t²
+            </div>
+            <ul>
+                <li>At t = 2s: position = 1.5(4) = 6 meters</li>
+                <li>At t = 4s: position = 1.5(16) = 24 meters</li>
+                <li>At t = 6s: position = 1.5(36) = 54 meters</li>
+            </ul>
+            <p>The position increases faster because you're accelerating!</p>
+        </div>
+        
+        <div class="explanation">
+            <h2>🧮 The Mathematics</h2>
+            <h3>Integration Rules Used:</h3>
+            <ul>
+                <li><strong>Constant Rule:</strong> ∫ c dt = ct + C</li>
+                <li><strong>Initial Condition:</strong> C is determined by starting position</li>
+                <li><strong>Definite Integral for Distance:</strong> ∫₀ᵗ v dt = s(t) - s(0)</li>
+            </ul>
+            
+            <div class="formula">
+                v(t) = 5<br>
+                ↓ (integrate)<br>
+                s(t) = 5t + C<br>
+                ↓ (apply initial condition s(0) = 0)<br>
+                s(t) = 5t
+            </div>
+        </div>
+        
+        <div class="key-point">
+            <h3>🔄 The Complete Picture: Differentiation ↔ Integration</h3>
+            <div class="process-flow">
+                <div class="process-box">
+                    <h3>Position</h3>
+                    <p>s(t) = 5t</p>
+                </div>
+                <div class="process-arrow">
+                    ⇄<br>
+                    <span style="font-size: 0.5em;">d/dt ↑<br>∫ dt ↓</span>
+                </div>
+                <div class="process-box">
+                    <h3>Velocity</h3>
+                    <p>v(t) = 5</p>
+                </div>
+            </div>
+            <p style="text-align: center;"><strong>They're inverse operations!</strong></p>
+        </div>
+        
+        <div class="gps-example">
+            <h3>🌍 Real-World Applications Beyond GPS</h3>
+            <ul>
+                <li><strong>Fitness Trackers:</strong> Integrate steps/second to get distance walked</li>
+                <li><strong>Spacecraft Navigation:</strong> Integrate velocity vectors to track position in space</li>
+                <li><strong>Self-Driving Cars:</strong> Integrate sensor data to estimate position</li>
+                <li><strong>Drones:</strong> Integrate accelerometer data for stable flight</li>
+                <li><strong>Virtual Reality:</strong> Integrate head rotation speed to track orientation</li>
+            </ul>
+        </div>
+        
+        <div class="explanation">
+            <h2>⚠️ The Challenge: Accumulated Error</h2>
+            <p>There's a problem with pure integration for navigation:</p>
+            <ul>
+                <li>Small errors in velocity measurement accumulate over time</li>
+                <li>After hours of driving, position estimate can be way off</li>
+                <li>This is called <strong>drift</strong> or <strong>integration error</strong></li>
+            </ul>
+            <p><strong>Solution:</strong> Modern systems combine integration (fast, smooth) with absolute position measurements from GPS (accurate but noisy) using techniques like Kalman filtering!</p>
+        </div>
+        
+        <div class="key-point">
+            <h3>🎓 Key Takeaways</h3>
+            <ul>
+                <li><strong>Integration accumulates rate into total:</strong> velocity → position</li>
+                <li><strong>Every navigation system uses integration</strong> in some form</li>
+                <li><strong>Integration needs initial conditions:</strong> where did you start?</li>
+                <li><strong>Integration and differentiation are inverse operations</strong></li>
+                <li><strong>Real systems combine multiple methods</strong> to overcome limitations</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Generate data
+        const t = [];
+        const velocity = [];
+        const position = [];
+        
+        for (let time = 0; time <= 10; time += 0.2) {
+            t.push(time);
+            velocity.push(5); // constant velocity
+            position.push(5 * time); // integrated position
+        }
+        
+        // Create traces
+        const trace1 = {
+            x: t,
+            y: velocity,
+            mode: 'lines',
+            name: 'Velocity v(t)',
+            line: {
+                color: '#ec4899',
+                width: 4
+            }
+        };
+        
+        const trace2 = {
+            x: t,
+            y: position,
+            mode: 'lines',
+            name: 'Position s(t)',
+            line: {
+                color: '#06b6d4',
+                width: 4
+            },
+            yaxis: 'y2'
+        };
+        
+        const data = [trace1, trace2];
+        
+        const layout = {
+            title: {
+                text: 'Velocity (Constant) and Position (Accumulated) vs Time',
+                font: { size: 20, family: 'Arial, sans-serif' }
+            },
+            xaxis: {
+                title: 'Time (seconds)',
+                gridcolor: '#e2e8f0',
+                showgrid: true
+            },
+            yaxis: {
+                title: 'Velocity (m/s)',
+                titlefont: { color: '#ec4899' },
+                tickfont: { color: '#ec4899' },
+                gridcolor: '#e2e8f0',
+                showgrid: true,
+                range: [0, 10]
+            },
+            yaxis2: {
+                title: 'Position (meters)',
+                titlefont: { color: '#06b6d4' },
+                tickfont: { color: '#06b6d4' },
+                overlaying: 'y',
+                side: 'right',
+                showgrid: false
+            },
+            legend: {
+                x: 0.1,
+                y: 1,
+                bgcolor: 'rgba(255, 255, 255, 0.8)',
+                bordercolor: '#e2e8f0',
+                borderwidth: 2
+            },
+            height: 500,
+            margin: { t: 80, b: 80, l: 80, r: 80 }
+        };
+        
+        const config = {
+            responsive: true,
+            displayModeBar: true,
+            displaylogo: false
+        };
+        
+        Plotly.newPlot('gpsGraph', data, layout, config);
+    </script>
+</body>
+</html>

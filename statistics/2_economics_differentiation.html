@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus - Economics Example (Differentiation)</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f7fafc;
+        }
+        
+        .explanation {
+            background: linear-gradient(135deg, #d1fae515 0%, #a7f3d015 100%);
+            border-left: 5px solid #10b981;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .explanation h2 {
+            color: #2d3748;
+            margin-top: 0;
+        }
+        
+        .formula {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .key-point {
+            background: #d1fae5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #10b981;
+        }
+        
+        .example-box {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .color-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background: #10b981;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Economics: Revenue → Marginal Revenue</h1>
+        <p class="subtitle">Using Differentiation to Optimize Business Decisions</p>
+        
+        <div class="explanation">
+            <h2>📚 The Business Problem</h2>
+            <p>A company sells a product. They know their total revenue based on how many units they sell, but they want to know: <strong>"Should we produce one more unit?"</strong></p>
+            <p>To answer this, they need to find the <strong>marginal revenue</strong> - the additional revenue from selling one more unit.</p>
+            <p><strong>This is a perfect job for differentiation!</strong></p>
+        </div>
+        
+        <div class="formula">
+            <strong>Revenue Function:</strong> R(q) = 20q - 0.5q²
+        </div>
+        
+        <div class="color-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #10b981;"></div>
+                <span><strong>Total Revenue ($)</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f59e0b;"></div>
+                <span><strong>Marginal Revenue ($/unit)</strong></span>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div id="economicsGraph"></div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🎯 What's Happening?</h2>
+            <p><strong style="color: #10b981;">Green Curve (Total Revenue):</strong> Shows total money earned from selling q units. Notice it increases, peaks, then would decline!</p>
+            
+            <p><strong style="color: #f59e0b;">Orange Line (Marginal Revenue):</strong> Shows the additional revenue from selling one more unit. This is the derivative!</p>
+            
+            <div class="formula">
+                <strong>Taking the Derivative:</strong><br><br>
+                MR(q) = d/dq[R(q)] = d/dq[20q - 0.5q²]<br><br>
+                MR(q) = 20 - q
+            </div>
+            
+            <h3>Key Business Insights:</h3>
+            <ul>
+                <li>At q = 0 units, marginal revenue = $20 (first unit brings in $20)</li>
+                <li>At q = 10 units, marginal revenue = $10 (10th unit adds $10)</li>
+                <li>At q = 20 units, marginal revenue = $0 (revenue is maximized!)</li>
+                <li>Beyond q = 20, marginal revenue becomes negative (losing money per unit)</li>
+            </ul>
+        </div>
+        
+        <div class="example-box">
+            <h3>💼 Real Business Example</h3>
+            <p>Imagine a coffee shop deciding whether to make one more latte:</p>
+            <table>
+                <tr>
+                    <th>Quantity (q)</th>
+                    <th>Total Revenue R(q)</th>
+                    <th>Marginal Revenue MR(q)</th>
+                    <th>Decision</th>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>$87.50</td>
+                    <td>$15</td>
+                    <td>✅ Make more! Still profitable</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>$150</td>
+                    <td>$10</td>
+                    <td>✅ Keep going</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td>$187.50</td>
+                    <td>$5</td>
+                    <td>⚠️ Getting low</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>$200</td>
+                    <td>$0</td>
+                    <td>🛑 Stop here! Maximum revenue</td>
+                </tr>
+                <tr>
+                    <td>25</td>
+                    <td>$187.50</td>
+                    <td>-$5</td>
+                    <td>❌ Don't make more! Losing money</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="key-point">
+            <h3>💡 Real-World Application: Business Optimization</h3>
+            <p>Every business uses marginal analysis (differentiation) to make decisions:</p>
+            <ul>
+                <li><strong>Production:</strong> Should we make one more widget?</li>
+                <li><strong>Hiring:</strong> Should we hire one more employee?</li>
+                <li><strong>Pricing:</strong> Should we raise or lower prices?</li>
+                <li><strong>Advertising:</strong> Should we spend more on ads?</li>
+            </ul>
+            <p><strong>The derivative tells them the answer!</strong></p>
+        </div>
+        
+        <div class="explanation">
+            <h2>🧮 The Mathematics</h2>
+            <h3>Differentiation Rules Used:</h3>
+            <ul>
+                <li><strong>Power Rule:</strong> d/dq[q²] = 2q</li>
+                <li><strong>Constant Multiple:</strong> d/dq[0.5q²] = 0.5 × 2q = q</li>
+                <li><strong>Linear Term:</strong> d/dq[20q] = 20</li>
+                <li><strong>Sum Rule:</strong> Combine all terms</li>
+            </ul>
+            
+            <div class="formula">
+                R(q) = 20q - 0.5q²<br>
+                ↓ (differentiate)<br>
+                MR(q) = 20 - q
+            </div>
+            
+            <h3>Finding the Maximum Revenue:</h3>
+            <p>When marginal revenue = 0, total revenue is maximized:</p>
+            <div class="formula">
+                MR(q) = 0<br>
+                20 - q = 0<br>
+                q = 20 units
+            </div>
+            <p>At 20 units, total revenue = $200 (the peak of the green curve)</p>
+        </div>
+        
+        <div class="key-point">
+            <h3>🎓 Key Takeaway</h3>
+            <p><strong>Marginal Analysis = Optimization through Differentiation</strong></p>
+            <p>In economics and business, "marginal" always means "derivative." Whether it's marginal cost, marginal revenue, or marginal profit, we're using calculus to find the optimal point where the business should operate.</p>
+            <p><strong>This is how businesses maximize profit!</strong></p>
+        </div>
+        
+        <div class="example-box">
+            <h3>🌍 More Real-World Examples</h3>
+            <ul>
+                <li><strong>Amazon:</strong> Uses marginal analysis to decide Prime pricing</li>
+                <li><strong>Airlines:</strong> Use it to optimize ticket prices</li>
+                <li><strong>Manufacturers:</strong> Use it to decide production quantities</li>
+                <li><strong>Investors:</strong> Use it to maximize portfolio returns</li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Generate data
+        const q = [];
+        const revenue = [];
+        const marginalRevenue = [];
+        
+        for (let quantity = 0; quantity <= 25; quantity += 0.5) {
+            q.push(quantity);
+            revenue.push(20 * quantity - 0.5 * quantity * quantity);
+            marginalRevenue.push(20 - quantity);
+        }
+        
+        // Create traces
+        const trace1 = {
+            x: q,
+            y: revenue,
+            mode: 'lines',
+            name: 'Total Revenue R(q)',
+            line: {
+                color: '#10b981',
+                width: 4
+            }
+        };
+        
+        const trace2 = {
+            x: q,
+            y: marginalRevenue,
+            mode: 'lines',
+            name: 'Marginal Revenue MR(q)',
+            line: {
+                color: '#f59e0b',
+                width: 4
+            },
+            yaxis: 'y2'
+        };
+        
+        // Add point at maximum revenue
+        const trace3 = {
+            x: [20],
+            y: [200],
+            mode: 'markers',
+            name: 'Maximum Revenue',
+            marker: {
+                color: '#ef4444',
+                size: 12,
+                symbol: 'star'
+            }
+        };
+        
+        const data = [trace1, trace2, trace3];
+        
+        const layout = {
+            title: {
+                text: 'Total Revenue and Marginal Revenue vs Quantity',
+                font: { size: 20, family: 'Arial, sans-serif' }
+            },
+            xaxis: {
+                title: 'Quantity (units)',
+                gridcolor: '#e2e8f0',
+                showgrid: true
+            },
+            yaxis: {
+                title: 'Total Revenue ($)',
+                titlefont: { color: '#10b981' },
+                tickfont: { color: '#10b981' },
+                gridcolor: '#e2e8f0',
+                showgrid: true
+            },
+            yaxis2: {
+                title: 'Marginal Revenue ($/unit)',
+                titlefont: { color: '#f59e0b' },
+                tickfont: { color: '#f59e0b' },
+                overlaying: 'y',
+                side: 'right',
+                showgrid: false
+            },
+            legend: {
+                x: 0.1,
+                y: 1,
+                bgcolor: 'rgba(255, 255, 255, 0.8)',
+                bordercolor: '#e2e8f0',
+                borderwidth: 2
+            },
+            height: 500,
+            margin: { t: 80, b: 80, l: 80, r: 80 }
+        };
+        
+        const config = {
+            responsive: true,
+            displayModeBar: true,
+            displaylogo: false
+        };
+        
+        Plotly.newPlot('economicsGraph', data, layout, config);
+    </script>
+</body>
+</html>

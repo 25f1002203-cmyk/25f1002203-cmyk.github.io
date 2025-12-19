@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus - Motion Example (Differentiation)</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f7fafc;
+        }
+        
+        .explanation {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .explanation h2 {
+            color: #2d3748;
+            margin-top: 0;
+        }
+        
+        .formula {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .key-point {
+            background: #bee3f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #3182ce;
+        }
+        
+        .concept-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .concept {
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .concept.differentiation {
+            background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+            border-color: #fc8181;
+        }
+        
+        .concept.integration {
+            background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+            border-color: #68d391;
+        }
+        
+        .concept h3 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .color-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 15px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 Motion: Position → Velocity</h1>
+        <p class="subtitle">Understanding Differentiation Through Real-World Motion</p>
+        
+        <div class="explanation">
+            <h2>📚 The Problem</h2>
+            <p>Imagine you're tracking a car's position over time. You know where it is at every moment, but you want to know <strong>how fast it's moving</strong> at any given instant.</p>
+            <p><strong>This is where differentiation comes in!</strong></p>
+        </div>
+        
+        <div class="formula">
+            <strong>Position Function:</strong> s(t) = 0.5t² + 2t + 1
+        </div>
+        
+        <div class="color-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3b82f6;"></div>
+                <span><strong>Position (meters)</strong></span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ef4444;"></div>
+                <span><strong>Velocity (m/s)</strong></span>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div id="motionGraph"></div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🎯 What's Happening?</h2>
+            <p><strong style="color: #3b82f6;">Blue Curve (Position):</strong> Shows where the car is at each point in time. Notice it curves upward - the car is accelerating!</p>
+            
+            <p><strong style="color: #ef4444;">Red Line (Velocity):</strong> Shows how fast the car is moving. This is the derivative of position!</p>
+            
+            <div class="formula">
+                <strong>Taking the Derivative:</strong><br><br>
+                v(t) = d/dt[s(t)] = d/dt[0.5t² + 2t + 1]<br><br>
+                v(t) = t + 2
+            </div>
+            
+            <h3>Key Observations:</h3>
+            <ul>
+                <li>At t = 0 seconds, velocity = 2 m/s (starting speed)</li>
+                <li>At t = 5 seconds, velocity = 7 m/s</li>
+                <li>At t = 10 seconds, velocity = 12 m/s</li>
+                <li>The velocity increases linearly - constant acceleration!</li>
+            </ul>
+        </div>
+        
+        <div class="key-point">
+            <h3>💡 Real-World Application: Your Car's Speedometer</h3>
+            <p>Your car's speedometer is essentially a differentiation device! It constantly measures your position (through wheel rotations and GPS) and differentiates it to show your instantaneous speed.</p>
+            <p><strong>Differentiation answers:</strong> "How fast am I changing position RIGHT NOW?"</p>
+        </div>
+        
+        <div class="concept-box">
+            <div class="concept differentiation">
+                <h3>📉 Differentiation</h3>
+                <p><strong>What it does:</strong></p>
+                <ul>
+                    <li>Finds instantaneous rate of change</li>
+                    <li>Calculates slope at a point</li>
+                    <li>Tells you "how fast"</li>
+                </ul>
+                <p><strong>Symbol:</strong> d/dx or f'(x)</p>
+                <p><strong>In this example:</strong> Position → Velocity</p>
+            </div>
+            
+            <div class="concept integration">
+                <h3>📈 Integration (Reverse)</h3>
+                <p><strong>What it does:</strong></p>
+                <ul>
+                    <li>Accumulates values over time</li>
+                    <li>Finds total change</li>
+                    <li>Tells you "how much total"</li>
+                </ul>
+                <p><strong>Symbol:</strong> ∫ f(x) dx</p>
+                <p><strong>Reverse operation:</strong> Velocity → Position</p>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🧮 The Mathematics</h2>
+            <h3>Differentiation Rules Used:</h3>
+            <ul>
+                <li><strong>Power Rule:</strong> d/dt[t²] = 2t</li>
+                <li><strong>Constant Multiple:</strong> d/dt[0.5t²] = 0.5 × 2t = t</li>
+                <li><strong>Constant Rule:</strong> d/dt[1] = 0</li>
+                <li><strong>Sum Rule:</strong> Combine all terms</li>
+            </ul>
+            
+            <div class="formula">
+                s(t) = 0.5t² + 2t + 1<br>
+                ↓ (differentiate)<br>
+                v(t) = t + 2
+            </div>
+        </div>
+        
+        <div class="key-point">
+            <h3>🎓 Key Takeaway</h3>
+            <p><strong>Differentiation = Finding Rate of Change</strong></p>
+            <p>Whenever you need to know "how fast something is changing," you use differentiation. In physics, economics, engineering, and countless other fields, this is one of the most powerful tools we have!</p>
+        </div>
+    </div>
+    
+    <script>
+        // Generate data
+        const t = [];
+        const position = [];
+        const velocity = [];
+        
+        for (let time = 0; time <= 10; time += 0.2) {
+            t.push(time);
+            position.push(0.5 * time * time + 2 * time + 1);
+            velocity.push(time + 2);
+        }
+        
+        // Create traces
+        const trace1 = {
+            x: t,
+            y: position,
+            mode: 'lines',
+            name: 'Position s(t)',
+            line: {
+                color: '#3b82f6',
+                width: 4
+            }
+        };
+        
+        const trace2 = {
+            x: t,
+            y: velocity,
+            mode: 'lines',
+            name: 'Velocity v(t)',
+            line: {
+                color: '#ef4444',
+                width: 4
+            },
+            yaxis: 'y2'
+        };
+        
+        const data = [trace1, trace2];
+        
+        const layout = {
+            title: {
+                text: 'Position vs Time and Velocity vs Time',
+                font: { size: 20, family: 'Arial, sans-serif' }
+            },
+            xaxis: {
+                title: 'Time (seconds)',
+                gridcolor: '#e2e8f0',
+                showgrid: true
+            },
+            yaxis: {
+                title: 'Position (meters)',
+                titlefont: { color: '#3b82f6' },
+                tickfont: { color: '#3b82f6' },
+                gridcolor: '#e2e8f0',
+                showgrid: true
+            },
+            yaxis2: {
+                title: 'Velocity (m/s)',
+                titlefont: { color: '#ef4444' },
+                tickfont: { color: '#ef4444' },
+                overlaying: 'y',
+                side: 'right',
+                showgrid: false
+            },
+            legend: {
+                x: 0.1,
+                y: 1,
+                bgcolor: 'rgba(255, 255, 255, 0.8)',
+                bordercolor: '#e2e8f0',
+                borderwidth: 2
+            },
+            height: 500,
+            margin: { t: 80, b: 80, l: 80, r: 80 }
+        };
+        
+        const config = {
+            responsive: true,
+            displayModeBar: true,
+            displaylogo: false
+        };
+        
+        Plotly.newPlot('motionGraph', data, layout, config);
+    </script>
+</body>
+</html>

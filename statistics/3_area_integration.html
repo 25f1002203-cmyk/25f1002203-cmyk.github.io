@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus - Area Under Curve (Integration)</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .graph-container {
+            margin: 30px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f7fafc;
+        }
+        
+        .explanation {
+            background: linear-gradient(135deg, #ddd6fe15 0%, #c4b5fd15 100%);
+            border-left: 5px solid #8b5cf6;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .explanation h2 {
+            color: #2d3748;
+            margin-top: 0;
+        }
+        
+        .formula {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .key-point {
+            background: #ddd6fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #8b5cf6;
+        }
+        
+        .steps-box {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #f59e0b;
+        }
+        
+        .steps-box ol {
+            line-height: 2;
+            padding-left: 20px;
+        }
+        
+        ul {
+            line-height: 1.8;
+        }
+        
+        .color-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .comparison-item {
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .comparison-item h3 {
+            margin-top: 0;
+        }
+        
+        .riemann-visual {
+            background: #f3e8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Finding Area Under a Curve</h1>
+        <p class="subtitle">Understanding Integration Through Geometric Accumulation</p>
+        
+        <div class="explanation">
+            <h2>📚 The Problem</h2>
+            <p>You have a function f(x) = x² and you want to find the <strong>total area</strong> between the curve and the x-axis from x = 0 to x = 5.</p>
+            <p>Simple shapes like rectangles and triangles have easy area formulas, but curved shapes? That's where we need calculus!</p>
+            <p><strong>This is what integration was invented for!</strong></p>
+        </div>
+        
+        <div class="formula">
+            <strong>Function:</strong> f(x) = x²
+        </div>
+        
+        <div class="color-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #8b5cf6;"></div>
+                <span><strong>Area Under f(x) = x²</strong></span>
+            </div>
+        </div>
+        
+        <div class="graph-container">
+            <div id="areaGraph"></div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🎯 What's Happening?</h2>
+            <p><strong style="color: #8b5cf6;">Purple Shaded Region:</strong> This is the area we want to calculate. It's not a simple rectangle or triangle - it's bounded by a curve!</p>
+            
+            <div class="formula">
+                <strong>The Integral:</strong><br><br>
+                Area = ∫₀⁵ x² dx
+            </div>
+            
+            <h3>The Solution:</h3>
+            <p>Using the power rule for integration:</p>
+            <div class="formula">
+                ∫ x² dx = x³/3 + C
+            </div>
+            
+            <p>For a definite integral from 0 to 5:</p>
+            <div class="formula">
+                ∫₀⁵ x² dx = [x³/3]₀⁵ = (5³/3) - (0³/3) = 125/3 ≈ 41.67 square units
+            </div>
+        </div>
+        
+        <div class="riemann-visual">
+            <h3>💡 How Integration Works: Riemann Sums</h3>
+            <p>Integration is like adding up infinitely many infinitely thin rectangles!</p>
+            <div style="margin: 20px 0; font-size: 2em;">
+                ▭ + ▭ + ▭ + ▭ + ▭ + ... → ∫
+            </div>
+            <p>As rectangles get thinner and more numerous, the sum approaches the exact area.</p>
+        </div>
+        
+        <div class="steps-box">
+            <h3>🧮 Step-by-Step Solution</h3>
+            <ol>
+                <li><strong>Write the integral:</strong> ∫₀⁵ x² dx</li>
+                <li><strong>Find the antiderivative:</strong> x³/3</li>
+                <li><strong>Evaluate at upper bound:</strong> (5)³/3 = 125/3</li>
+                <li><strong>Evaluate at lower bound:</strong> (0)³/3 = 0</li>
+                <li><strong>Subtract:</strong> 125/3 - 0 = 41.67 square units</li>
+            </ol>
+        </div>
+        
+        <div class="key-point">
+            <h3>💡 Real-World Applications of Finding Area</h3>
+            <ul>
+                <li><strong>Physics:</strong> Work done by a variable force = area under force vs. distance curve</li>
+                <li><strong>Economics:</strong> Consumer surplus = area between demand curve and price</li>
+                <li><strong>Probability:</strong> P(a ≤ X ≤ b) = area under probability density function</li>
+                <li><strong>Engineering:</strong> Total flow = area under flow rate curve</li>
+                <li><strong>Medicine:</strong> Drug concentration over time = area under concentration curve (AUC)</li>
+            </ul>
+        </div>
+        
+        <div class="comparison">
+            <div class="comparison-item" style="background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);">
+                <h3>📉 Differentiation</h3>
+                <p><strong>Breaks things down</strong></p>
+                <ul>
+                    <li>Finds slope/rate</li>
+                    <li>Local property</li>
+                    <li>Instantaneous value</li>
+                    <li>Example: velocity from position</li>
+                </ul>
+                <div class="formula" style="background: white;">
+                    d/dx[x³/3] = x²
+                </div>
+            </div>
+            
+            <div class="comparison-item" style="background: linear-gradient(135deg, #ddd6fe 0%, #c4b5fd 100%);">
+                <h3>📈 Integration</h3>
+                <p><strong>Builds things up</strong></p>
+                <ul>
+                    <li>Finds total/accumulation</li>
+                    <li>Global property</li>
+                    <li>Cumulative value</li>
+                    <li>Example: position from velocity</li>
+                </ul>
+                <div class="formula" style="background: white;">
+                    ∫ x² dx = x³/3 + C
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h2>🧮 The Mathematics</h2>
+            <h3>Integration Rules Used:</h3>
+            <ul>
+                <li><strong>Power Rule:</strong> ∫ x^n dx = x^(n+1)/(n+1) + C</li>
+                <li><strong>Definite Integral:</strong> ∫ₐᵇ f(x) dx = F(b) - F(a)</li>
+                <li><strong>Fundamental Theorem of Calculus:</strong> Integration and differentiation are inverses</li>
+            </ul>
+            
+            <div class="formula">
+                f(x) = x²<br>
+                ↓ (integrate)<br>
+                F(x) = x³/3 + C<br>
+                ↓ (differentiate)<br>
+                f(x) = x² ✓
+            </div>
+        </div>
+        
+        <div class="key-point">
+            <h3>🎓 Key Takeaways</h3>
+            <p><strong>Integration = Accumulation/Summation</strong></p>
+            <ul>
+                <li>Integration adds up infinite small pieces to find a total</li>
+                <li>The definite integral gives a number (the total accumulated value)</li>
+                <li>The indefinite integral gives a function (the accumulation function)</li>
+                <li>Integration is the reverse process of differentiation</li>
+            </ul>
+        </div>
+        
+        <div class="steps-box">
+            <h3>🌍 Why This Matters</h3>
+            <p>Before calculus, we could only find areas of simple shapes. Integration allows us to find:</p>
+            <ul>
+                <li>The area of any curved region</li>
+                <li>The volume of any 3D solid</li>
+                <li>The total distance traveled with varying speed</li>
+                <li>The total work done by a changing force</li>
+                <li>The probability in continuous distributions</li>
+            </ul>
+            <p><strong>This revolutionized mathematics, physics, and engineering!</strong></p>
+        </div>
+    </div>
+    
+    <script>
+        // Generate data for the curve
+        const x = [];
+        const y = [];
+        
+        for (let xi = 0; xi <= 5; xi += 0.1) {
+            x.push(xi);
+            y.push(xi * xi);
+        }
+        
+        // Create the area trace
+        const trace1 = {
+            x: x,
+            y: y,
+            fill: 'tozeroy',
+            type: 'scatter',
+            mode: 'lines',
+            name: 'f(x) = x²',
+            line: {
+                color: '#8b5cf6',
+                width: 3
+            },
+            fillcolor: 'rgba(139, 92, 246, 0.3)'
+        };
+        
+        // Add annotation for the area
+        const annotations = [
+            {
+                x: 2.5,
+                y: 8,
+                text: 'Area = 41.67 sq units',
+                showarrow: true,
+                arrowhead: 2,
+                ax: 0,
+                ay: -40,
+                font: {
+                    size: 16,
+                    color: '#8b5cf6',
+                    family: 'Arial, sans-serif'
+                },
+                bgcolor: 'rgba(255, 255, 255, 0.9)',
+                bordercolor: '#8b5cf6',
+                borderwidth: 2,
+                borderpad: 4
+            }
+        ];
+        
+        const data = [trace1];
+        
+        const layout = {
+            title: {
+                text: 'Area Under the Curve f(x) = x² from 0 to 5',
+                font: { size: 20, family: 'Arial, sans-serif' }
+            },
+            xaxis: {
+                title: 'x',
+                gridcolor: '#e2e8f0',
+                showgrid: true,
+                range: [-0.5, 5.5]
+            },
+            yaxis: {
+                title: 'f(x) = x²',
+                gridcolor: '#e2e8f0',
+                showgrid: true,
+                range: [-1, 27]
+            },
+            annotations: annotations,
+            shapes: [
+                {
+                    type: 'line',
+                    x0: 0,
+                    y0: 0,
+                    x1: 5,
+                    y1: 0,
+                    line: {
+                        color: '#2d3748',
+                        width: 2
+                    }
+                },
+                {
+                    type: 'line',
+                    x0: 0,
+                    y0: 0,
+                    x1: 0,
+                    y1: 25,
+                    line: {
+                        color: '#8b5cf6',
+                        width: 2,
+                        dash: 'dash'
+                    }
+                },
+                {
+                    type: 'line',
+                    x0: 5,
+                    y0: 0,
+                    x1: 5,
+                    y1: 25,
+                    line: {
+                        color: '#8b5cf6',
+                        width: 2,
+                        dash: 'dash'
+                    }
+                }
+            ],
+            legend: {
+                x: 0.1,
+                y: 1,
+                bgcolor: 'rgba(255, 255, 255, 0.8)',
+                bordercolor: '#e2e8f0',
+                borderwidth: 2
+            },
+            height: 500,
+            margin: { t: 80, b: 80, l: 80, r: 80 }
+        };
+        
+        const config = {
+            responsive: true,
+            displayModeBar: true,
+            displaylogo: false
+        };
+        
+        Plotly.newPlot('areaGraph', data, layout, config);
+    </script>
+</body>
+</html>
