@@ -1,5 +1,5 @@
 /**
- * create.js - Handles creating and editing flashcards
+ * create.js - Handles creating and editing flashcards with markdown support
  */
 
 let currentDeckId = sessionStorage.getItem('currentDeckId');
@@ -77,6 +77,11 @@ function handleAddCard(e) {
         return;
     }
 
+    if (front.length > 5000 || back.length > 5000) {
+        alert('Content is too long (max 5000 characters)');
+        return;
+    }
+
     const newCard = StorageManager.addCard(currentDeckId, front, back);
     allCards.push(newCard);
     
@@ -104,9 +109,13 @@ function renderCards() {
     allCards.forEach(card => {
         const editBtn = document.getElementById(`edit-${card.id}`);
         const deleteBtn = document.getElementById(`delete-${card.id}`);
+        const toggleBtn = document.getElementById(`toggle-${card.id}`);
         
         if (editBtn) editBtn.addEventListener('click', () => openEditModal(card.id));
         if (deleteBtn) deleteBtn.addEventListener('click', () => openConfirmModal(card.id));
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => toggleCardPreview(card.id, toggleBtn));
+        }
     });
 }
 
@@ -116,16 +125,63 @@ function renderCards() {
  * @returns {String} HTML string for the card
  */
 function createCardItem(card) {
+    const shortFront = truncateText(MarkdownParser.stripMarkdown(card.front), 80);
+    const shortBack = truncateText(MarkdownParser.stripMarkdown(card.back), 80);
+    
     return `
         <div class="card-item">
-            <div class="card-item-front">📱 ${escapeHtml(card.front)}</div>
-            <div class="card-item-back">${escapeHtml(card.back)}</div>
+            <div class="card-item-content">
+                <div class="card-item-front">📱 ${escapeHtml(shortFront)}</div>
+                <div class="card-item-back">${escapeHtml(shortBack)}</div>
+            </div>
+            <div class="card-item-preview hidden" id="preview-${card.id}">
+                <div class="preview-section">
+                    <h4>📱 Front:</h4>
+                    ${MarkdownParser.parse(card.front)}
+                </div>
+                <div class="preview-section">
+                    <h4>📝 Back:</h4>
+                    ${MarkdownParser.parse(card.back)}
+                </div>
+            </div>
             <div class="card-item-actions">
-                <button id="edit-${card.id}" class="btn btn-secondary">퉰f️ Edit</button>
-                <button id="delete-${card.id}" class="btn btn-danger">🗑️ Delete</button>
+                <button id="toggle-${card.id}" class="btn btn-outline btn-sm">👁️ Preview</button>
+                <button id="edit-${card.id}" class="btn btn-secondary btn-sm">퉰f️ Edit</button>
+                <button id="delete-${card.id}" class="btn btn-danger btn-sm">🗑️</button>
             </div>
         </div>
     `;
+}
+
+/**
+ * Toggle card preview
+ * @param {String} cardId - The ID of the card
+ * @param {HTMLElement} toggleBtn - The toggle button
+ */
+function toggleCardPreview(cardId, toggleBtn) {
+    const preview = document.getElementById(`preview-${cardId}`);
+    const content = toggleBtn.parentElement.parentElement.querySelector('.card-item-content');
+    
+    if (preview.classList.contains('hidden')) {
+        preview.classList.remove('hidden');
+        content.classList.add('hidden');
+        toggleBtn.textContent = '📝 Edit';
+    } else {
+        preview.classList.add('hidden');
+        content.classList.remove('hidden');
+        toggleBtn.textContent = '👁️ Preview';
+    }
+}
+
+/**
+ * Truncate text with ellipsis
+ * @param {String} text - Text to truncate
+ * @param {Number} maxLength - Maximum length
+ * @returns {String} Truncated text
+ */
+function truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
 }
 
 /**
@@ -166,6 +222,11 @@ function saveEdit() {
         return;
     }
 
+    if (front.length > 5000 || back.length > 5000) {
+        alert('Content is too long (max 5000 characters)');
+        return;
+    }
+
     StorageManager.updateCard(currentDeckId, editingCardId, front, back);
     
     // Update local array
@@ -186,7 +247,8 @@ function saveEdit() {
 function openConfirmModal(cardId) {
     cardToDelete = cardId;
     const card = allCards.find(c => c.id === cardId);
-    confirmMessage.textContent = `Delete card: "${card.front}"?`;
+    const shortText = truncateText(MarkdownParser.stripMarkdown(card.front), 50);
+    confirmMessage.textContent = `Delete card: "${shortText}"?`;
     confirmModal.classList.remove('hidden');
 }
 
