@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit Cards - Flashcard Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="btn-back">← Back to Decks</a>
+            <h1 id="pageTitle">Add Cards to Deck</h1>
+        </header>
+
+        <main class="main-content">
+            <!-- Add Card Form -->
+            <section class="create-card-section">
+                <h2>Create New Card</h2>
+                <form id="cardForm" class="card-form">
+                    <div class="form-group">
+                        <label for="frontInput">Question/Front:</label>
+                        <textarea 
+                            id="frontInput" 
+                            placeholder="What do you want to learn?"
+                            class="textarea-field"
+                            required
+                        ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="backInput">Answer/Back:</label>
+                        <textarea 
+                            id="backInput" 
+                            placeholder="The answer or explanation..."
+                            class="textarea-field"
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">+ Add Card</button>
+                </form>
+            </section>
+
+            <!-- Cards List -->
+            <section class="cards-list-section">
+                <div class="section-header">
+                    <h2>Cards in Deck</h2>
+                    <span id="cardCount" class="card-count">0 cards</span>
+                </div>
+                <div id="cardsList" class="cards-list">
+                    <div class="empty-state">
+                        <p>No cards yet. Add your first card! 🌟</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <section class="create-actions">
+                <a href="index.html" class="btn btn-secondary">Back to Decks</a>
+                <button id="studyBtn" class="btn btn-success">Study This Deck 📚</button>
+            </section>
+        </main>
+    </div>
+
+    <!-- Edit Card Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Edit Card</h3>
+            <div class="form-group">
+                <label for="editFront">Question/Front:</label>
+                <textarea id="editFront" class="textarea-field"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="editBack">Answer/Back:</label>
+                <textarea id="editBack" class="textarea-field"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="saveEditBtn" class="btn btn-primary">Save</button>
+                <button id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Delete Card?</h3>
+            <p id="confirmMessage"></p>
+            <div class="modal-actions">
+                <button id="confirmBtn" class="btn btn-danger">Delete</button>
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/create.js"></script>
+</body>
+</html>
