@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Mode - Flashcard Manager</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/editor.css">
 </head>
 <body>
     <div class="container study-container">
@@ -34,11 +35,11 @@
                     <div class="flashcard-inner">
                         <div class="flashcard-front">
                             <p class="flashcard-label">Question</p>
-                            <p id="cardFront" class="flashcard-content">Loading...</p>
+                            <div id="cardFront" class="flashcard-content">Loading...</div>
                         </div>
                         <div class="flashcard-back">
                             <p class="flashcard-label">Answer</p>
-                            <p id="cardBack" class="flashcard-content">Click to reveal</p>
+                            <div id="cardBack" class="flashcard-content">Click to reveal</div>
                         </div>
                     </div>
                 </div>
@@ -75,6 +76,7 @@
     </div>
 
     <script src="js/storage.js"></script>
+    <script src="js/markdown.js"></script>
     <script src="js/card.js"></script>
 </body>
 </html>

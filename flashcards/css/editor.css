@@ -1,0 +1,332 @@
+/* ========================================
+   EDITOR STYLES - Rich text editing
+   ======================================== */
+
+.editor-toolbar {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: var(--light-color);
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.toolbar-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    min-width: 32px;
+    text-align: center;
+}
+
+.toolbar-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.toolbar-btn:active {
+    transform: scale(0.95);
+}
+
+.toolbar-separator {
+    width: 1px;
+    height: 24px;
+    background: var(--border-color);
+    margin: 0 8px;
+}
+
+.char-count {
+    font-size: 0.85rem;
+    color: #999;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* Editor container and textarea */
+.editor-container {
+    position: relative;
+}
+
+.editor-textarea {
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+    resize: vertical;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.preview-toggle {
+    padding: 8px 12px;
+    background: var(--light-color);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    text-align: right;
+}
+
+.preview-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preview-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Markdown Preview */
+.markdown-preview {
+    padding: 20px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: -4px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: block;
+}
+
+.markdown-preview.hidden {
+    display: none;
+}
+
+.markdown-content {
+    line-height: 1.6;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+    margin: 15px 0 10px 0;
+    color: var(--primary-color);
+}
+
+.markdown-content h1 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.markdown-content h2 {
+    font-size: 1.3rem;
+}
+
+.markdown-content h3 {
+    font-size: 1.1rem;
+}
+
+.markdown-content strong {
+    color: var(--dark-color);
+    font-weight: 700;
+}
+
+.markdown-content em {
+    color: var(--text-color);
+    font-style: italic;
+}
+
+.markdown-content code {
+    background: var(--light-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #d63384;
+}
+
+.markdown-content pre {
+    background: var(--dark-color);
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.markdown-content pre code {
+    background: none;
+    color: #fff;
+    padding: 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.markdown-content li {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.markdown-content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.markdown-content a:hover {
+    color: var(--primary-hover);
+}
+
+.markdown-content hr {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 20px 0;
+}
+
+.markdown-content br {
+    display: block;
+    content: ' ';
+}
+
+/* Format Help */
+.format-help {
+    margin: 20px 0;
+    padding: 15px;
+    background: var(--light-color);
+    border-radius: 8px;
+}
+
+.format-help summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+    user-select: none;
+}
+
+.format-help summary:hover {
+    color: var(--primary-hover);
+}
+
+.format-help details[open] summary {
+    margin-bottom: 15px;
+}
+
+.help-content {
+    font-size: 0.9rem;
+}
+
+.help-content h4 {
+    margin: 0 0 10px 0;
+    color: var(--dark-color);
+}
+
+.help-content ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.help-content li {
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+.help-content code {
+    background: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+/* Card item preview */
+.card-item-preview {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--light-color);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.card-item-preview.hidden {
+    display: none;
+}
+
+.preview-section {
+    margin-bottom: 20px;
+}
+
+.preview-section:last-child {
+    margin-bottom: 0;
+}
+
+.preview-section h4 {
+    margin: 0 0 10px 0;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+}
+
+.card-item-content {
+    margin-bottom: 10px;
+}
+
+.card-item-content.hidden {
+    display: none;
+}
+
+/* Button styles for editor */
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background: var(--light-color);
+    border-color: var(--primary-color);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* Responsive editor */
+@media (max-width: 768px) {
+    .editor-toolbar {
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .toolbar-btn {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+    }
+
+    .char-count {
+        width: 100%;
+        text-align: left;
+        margin-left: 0;
+        margin-top: 5px;
+        order: -1;
+    }
+
+    .markdown-preview {
+        max-height: 300px;
+    }
+
+    .card-item-preview {
+        font-size: 0.9rem;
+    }
+}

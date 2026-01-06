@@ -1,5 +1,5 @@
 /**
- * card.js - Handles study mode, card flipping, and navigation
+ * card.js - Handles study mode, card flipping, and navigation with markdown rendering
  */
 
 let currentDeckId = sessionStorage.getItem('currentDeckId');
@@ -74,18 +74,20 @@ function setupEventListeners() {
 }
 
 /**
- * Display current card
+ * Display current card with markdown rendering
  */
 function displayCard() {
     if (currentCards.length === 0) {
-        cardFront.textContent = 'No cards in this deck';
-        cardBack.textContent = 'Add cards to get started';
+        cardFront.innerHTML = '<p>No cards in this deck</p>';
+        cardBack.innerHTML = '<p>Add cards to get started</p>';
         return;
     }
 
     const card = currentCards[currentIndex];
-    cardFront.textContent = card.front;
-    cardBack.textContent = card.back;
+    
+    // Parse and render markdown content
+    cardFront.innerHTML = MarkdownParser.parse(card.front);
+    cardBack.innerHTML = MarkdownParser.parse(card.back);
     flashcard.classList.remove('flipped');
 
     // Update counter and progress
