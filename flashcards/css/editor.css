@@ -107,34 +107,43 @@
     display: none;
 }
 
+/* Markdown content - safe for all containers */
 .markdown-content {
     line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .markdown-content h1,
 .markdown-content h2,
 .markdown-content h3 {
-    margin: 15px 0 10px 0;
+    margin: 12px 0 8px 0;
     color: var(--primary-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .markdown-content h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 5px;
 }
 
 .markdown-content h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .markdown-content h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .markdown-content strong {
     color: var(--dark-color);
     font-weight: 700;
+    word-wrap: break-word;
 }
 
 .markdown-content em {
@@ -149,40 +158,48 @@
     font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     color: #d63384;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .markdown-content pre {
     background: var(--dark-color);
     color: #fff;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 6px;
     overflow-x: auto;
-    margin: 15px 0;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    margin: 12px 0;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .markdown-content pre code {
     background: none;
     color: #fff;
     padding: 0;
+    font-size: 0.8rem;
 }
 
 .markdown-content ul,
 .markdown-content ol {
-    margin: 15px 0;
-    padding-left: 30px;
+    margin: 10px 0;
+    padding-left: 20px;
+    word-wrap: break-word;
 }
 
 .markdown-content li {
-    margin: 8px 0;
-    line-height: 1.6;
+    margin: 4px 0;
+    line-height: 1.5;
+    word-wrap: break-word;
 }
 
 .markdown-content a {
     color: var(--primary-color);
     text-decoration: underline;
     transition: color 0.2s ease;
+    word-wrap: break-word;
 }
 
 .markdown-content a:hover {
@@ -192,12 +209,17 @@
 .markdown-content hr {
     border: none;
     border-top: 2px solid var(--border-color);
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 .markdown-content br {
     display: block;
     content: ' ';
+}
+
+.markdown-content p {
+    margin: 8px 0;
+    word-wrap: break-word;
 }
 
 /* Format Help */
@@ -257,6 +279,8 @@
     background: var(--light-color);
     border-radius: 8px;
     border-left: 4px solid var(--primary-color);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .card-item-preview.hidden {
@@ -264,7 +288,8 @@
 }
 
 .preview-section {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    word-wrap: break-word;
 }
 
 .preview-section:last-child {
@@ -272,13 +297,14 @@
 }
 
 .preview-section h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     color: var(--primary-color);
     font-size: 0.95rem;
 }
 
 .card-item-content {
     margin-bottom: 10px;
+    word-wrap: break-word;
 }
 
 .card-item-content.hidden {
@@ -300,6 +326,40 @@
 .btn-sm {
     padding: 6px 12px;
     font-size: 0.85rem;
+}
+
+/* Flashcard specific markdown content fixes */
+.flashcard-content .markdown-content {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.flashcard-content .markdown-content h1,
+.flashcard-content .markdown-content h2,
+.flashcard-content .markdown-content h3 {
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+
+.flashcard-content .markdown-content pre {
+    font-size: 0.75rem;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+.flashcard-content .markdown-content ul,
+.flashcard-content .markdown-content ol {
+    padding-left: 16px;
+    margin: 6px 0;
+}
+
+.flashcard-content .markdown-content li {
+    font-size: 0.95rem;
+    margin: 3px 0;
 }
 
 /* Responsive editor */
@@ -328,5 +388,31 @@
 
     .card-item-preview {
         font-size: 0.9rem;
+    }
+
+    .flashcard-content .markdown-content {
+        font-size: 0.9rem;
+    }
+
+    .flashcard-content .markdown-content pre {
+        font-size: 0.7rem;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .flashcard-content .markdown-content {
+        font-size: 0.85rem;
+    }
+
+    .flashcard-content .markdown-content h1,
+    .flashcard-content .markdown-content h2,
+    .flashcard-content .markdown-content h3 {
+        font-size: 1rem;
+    }
+
+    .flashcard-content .markdown-content pre {
+        font-size: 0.65rem;
+        padding: 6px;
     }
 }
