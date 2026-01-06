@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Mode - Flashcard Manager</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container study-container">
+        <header class="header">
+            <div class="header-flex">
+                <a href="index.html" class="btn-back">← Back to Decks</a>
+                <h1 id="deckTitle">Study Mode</h1>
+                <div class="spacer"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Study Controls -->
+            <section class="study-controls">
+                <button id="shuffleBtn" class="btn btn-secondary">🔀 Shuffle</button>
+                <div class="progress-info">
+                    <span id="cardCounter">Card 1 of 10</span>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flashcard Display -->
+            <section class="flashcard-section">
+                <div id="flashcard" class="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <p class="flashcard-label">Question</p>
+                            <p id="cardFront" class="flashcard-content">Loading...</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p class="flashcard-label">Answer</p>
+                            <p id="cardBack" class="flashcard-content">Click to reveal</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="flip-hint">Click card or press SPACEBAR to flip</p>
+            </section>
+
+            <!-- Navigation Controls -->
+            <section class="study-navigation">
+                <button id="prevBtn" class="btn btn-secondary">← Previous</button>
+                <div class="card-status">
+                    <button id="unknownBtn" class="btn btn-status btn-unknown" title="Mark as unknown">❌ Don't Know</button>
+                    <button id="reviewBtn" class="btn btn-status btn-review" title="Mark for review">⚠️ Review</button>
+                    <button id="knownBtn" class="btn btn-status btn-known" title="Mark as known">✅ Know</button>
+                </div>
+                <button id="nextBtn" class="btn btn-secondary">Next →</button>
+            </section>
+
+            <!-- Statistics -->
+            <section class="study-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Know:</span>
+                    <span id="statKnown" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Review:</span>
+                    <span id="statReview" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Unknown:</span>
+                    <span id="statUnknown" class="stat-value">0</span>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/card.js"></script>
+</body>
+</html>
