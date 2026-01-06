@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create/Edit Cards - Flashcard Manager</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/editor.css">
 </head>
 <body>
     <div class="container">
@@ -18,24 +19,81 @@
             <section class="create-card-section">
                 <h2>Create New Card</h2>
                 <form id="cardForm" class="card-form">
+                    <!-- Question Input -->
                     <div class="form-group">
                         <label for="frontInput">Question/Front:</label>
-                        <textarea 
-                            id="frontInput" 
-                            placeholder="What do you want to learn?"
-                            class="textarea-field"
-                            required
-                        ></textarea>
+                        <div class="editor-toolbar">
+                            <button type="button" class="toolbar-btn" data-format="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+                            <button type="button" class="toolbar-btn" data-format="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+                            <button type="button" class="toolbar-btn" data-format="code" title="Code">{'<code>'}</button>
+                            <button type="button" class="toolbar-btn" data-format="ul" title="Bullet List">• List</button>
+                            <button type="button" class="toolbar-btn" data-format="ol" title="Numbered List">1. List</button>
+                            <button type="button" class="toolbar-btn" data-format="link" title="Add Link">🔗 Link</button>
+                            <div class="toolbar-separator"></div>
+                            <span class="char-count" id="frontCount">0 / 5000</span>
+                        </div>
+                        <div class="editor-container">
+                            <textarea 
+                                id="frontInput" 
+                                placeholder="What do you want to learn? (Supports markdown: **bold**, *italic*, `code`, - bullet, 1. numbered)"
+                                class="textarea-field editor-textarea"
+                                required
+                            ></textarea>
+                            <div class="preview-toggle">
+                                <button type="button" class="preview-btn" id="frontPreviewBtn">👁️ Preview</button>
+                            </div>
+                            <div class="markdown-preview" id="frontPreview"></div>
+                        </div>
                     </div>
+
+                    <!-- Answer Input -->
                     <div class="form-group">
                         <label for="backInput">Answer/Back:</label>
-                        <textarea 
-                            id="backInput" 
-                            placeholder="The answer or explanation..."
-                            class="textarea-field"
-                            required
-                        ></textarea>
+                        <div class="editor-toolbar">
+                            <button type="button" class="toolbar-btn" data-format="bold" title="Bold (Ctrl+B)"><strong>B</strong></button>
+                            <button type="button" class="toolbar-btn" data-format="italic" title="Italic (Ctrl+I)"><em>I</em></button>
+                            <button type="button" class="toolbar-btn" data-format="code" title="Code">{'<code>'}</button>
+                            <button type="button" class="toolbar-btn" data-format="ul" title="Bullet List">• List</button>
+                            <button type="button" class="toolbar-btn" data-format="ol" title="Numbered List">1. List</button>
+                            <button type="button" class="toolbar-btn" data-format="link" title="Add Link">🔗 Link</button>
+                            <div class="toolbar-separator"></div>
+                            <span class="char-count" id="backCount">0 / 5000</span>
+                        </div>
+                        <div class="editor-container">
+                            <textarea 
+                                id="backInput" 
+                                placeholder="The answer or explanation... (Supports markdown: **bold**, *italic*, `code`, - bullet, 1. numbered)"
+                                class="textarea-field editor-textarea"
+                                required
+                            ></textarea>
+                            <div class="preview-toggle">
+                                <button type="button" class="preview-btn" id="backPreviewBtn">👁️ Preview</button>
+                            </div>
+                            <div class="markdown-preview" id="backPreview"></div>
+                        </div>
                     </div>
+
+                    <!-- Format Help -->
+                    <div class="format-help">
+                        <details>
+                            <summary>📝 Formatting Help</summary>
+                            <div class="help-content">
+                                <h4>Markdown Syntax:</h4>
+                                <ul>
+                                    <li><code>**text**</code> → <strong>bold</strong></li>
+                                    <li><code>*text*</code> → <em>italic</em></li>
+                                    <li><code>`code`</code> → <code>inline code</code></li>
+                                    <li><code>```code block```</code> → code block</li>
+                                    <li><code>- item</code> → bullet list</li>
+                                    <li><code>1. item</code> → numbered list</li>
+                                    <li><code>[text](url)</code> → link</li>
+                                    <li><code># Heading</code> → # Heading</li>
+                                    <li><code>---</code> → horizontal line</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">+ Add Card</button>
                 </form>
             </section>
@@ -67,11 +125,25 @@
             <h3>Edit Card</h3>
             <div class="form-group">
                 <label for="editFront">Question/Front:</label>
-                <textarea id="editFront" class="textarea-field"></textarea>
+                <div class="editor-toolbar">
+                    <button type="button" class="toolbar-btn" data-format="bold" title="Bold"><strong>B</strong></button>
+                    <button type="button" class="toolbar-btn" data-format="italic" title="Italic"><em>I</em></button>
+                    <button type="button" class="toolbar-btn" data-format="code" title="Code">{'<code>'}</button>
+                    <button type="button" class="toolbar-btn" data-format="ul" title="Bullet List">• List</button>
+                    <button type="button" class="toolbar-btn" data-format="link" title="Link">🔗 Link</button>
+                </div>
+                <textarea id="editFront" class="textarea-field editor-textarea"></textarea>
             </div>
             <div class="form-group">
                 <label for="editBack">Answer/Back:</label>
-                <textarea id="editBack" class="textarea-field"></textarea>
+                <div class="editor-toolbar">
+                    <button type="button" class="toolbar-btn" data-format="bold" title="Bold"><strong>B</strong></button>
+                    <button type="button" class="toolbar-btn" data-format="italic" title="Italic"><em>I</em></button>
+                    <button type="button" class="toolbar-btn" data-format="code" title="Code">{'<code>'}</button>
+                    <button type="button" class="toolbar-btn" data-format="ul" title="Bullet List">• List</button>
+                    <button type="button" class="toolbar-btn" data-format="link" title="Link">🔗 Link</button>
+                </div>
+                <textarea id="editBack" class="textarea-field editor-textarea"></textarea>
             </div>
             <div class="modal-actions">
                 <button id="saveEditBtn" class="btn btn-primary">Save</button>
@@ -93,6 +165,8 @@
     </div>
 
     <script src="js/storage.js"></script>
+    <script src="js/markdown.js"></script>
+    <script src="js/editor.js"></script>
     <script src="js/create.js"></script>
 </body>
 </html>
