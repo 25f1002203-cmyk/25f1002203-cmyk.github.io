@@ -85,9 +85,24 @@ function displayCard() {
 
     const card = currentCards[currentIndex];
     
-    // Parse and render markdown content
-    cardFront.innerHTML = MarkdownParser.parse(card.front);
-    cardBack.innerHTML = MarkdownParser.parse(card.back);
+    // Verify MarkdownParser exists and parse content
+    if (typeof MarkdownParser !== 'undefined' && MarkdownParser.parse) {
+        try {
+            cardFront.innerHTML = MarkdownParser.parse(card.front || '');
+            cardBack.innerHTML = MarkdownParser.parse(card.back || '');
+        } catch (e) {
+            console.error('Error parsing markdown:', e);
+            // Fallback to plain text
+            cardFront.textContent = card.front || 'No content';
+            cardBack.textContent = card.back || 'No content';
+        }
+    } else {
+        // Fallback if MarkdownParser not loaded
+        console.warn('MarkdownParser not available, using plain text');
+        cardFront.textContent = card.front || 'No content';
+        cardBack.textContent = card.back || 'No content';
+    }
+    
     flashcard.classList.remove('flipped');
 
     // Update counter and progress
@@ -184,6 +199,9 @@ function shuffleCards() {
     currentIndex = 0;
     displayCard();
 }
+
+// Log that card.js is loaded
+console.log('✅ card.js module loaded');
 
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
