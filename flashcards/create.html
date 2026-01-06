@@ -164,7 +164,9 @@
         </div>
     </div>
 
-    <script src="js/storage.js"></script>
+    <!-- Load in correct order -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/storage-supabase.js"></script>
     <script src="js/markdown.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/create.js"></script>

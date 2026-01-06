@@ -10,42 +10,47 @@ const MarkdownParser = {
      * @returns {String} HTML string
      */
     parse(text) {
-        if (!text) return '';
+        if (!text || typeof text !== 'string') return '<p>No content</p>';
 
-        let html = this.escapeHtml(text);
+        let html = text;
+
+        // First escape HTML to prevent injection
+        html = this.escapeHtml(html);
 
         // Code blocks (```code```)
-        html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+        html = html.replace(/```([\s\S]*?)```/g, (match, code) => {
+            return '<pre><code>' + code.trim() + '</code></pre>';
+        });
 
-        // Inline code (`code`)
+        // Inline code (`code`) - must be after code blocks
         html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
         // Bold (**text** or __text__)
-        html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        html = html.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/__([^_]+?)__/g, '<strong>$1</strong>');
 
-        // Italic (*text* or _text_)
-        html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-        html = html.replace(/_([^_]+)_/g, '<em>$1</em>');
+        // Italic (*text* or _text_) - but not within **text**
+        html = html.replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+        html = html.replace(/_([^_\n]+?)_/g, '<em>$1</em>');
 
         // Links [text](url)
         html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 
-        // Headings
-        html = html.replace(/^### ([^\n]+)/gm, '<h3>$1</h3>');
-        html = html.replace(/^## ([^\n]+)/gm, '<h2>$1</h2>');
-        html = html.replace(/^# ([^\n]+)/gm, '<h1>$1</h1>');
+        // Headings - must be on own line
+        html = html.replace(/^### ([^\n]+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^## ([^\n]+)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^# ([^\n]+)$/gm, '<h1>$1</h1>');
 
         // Horizontal rule
         html = html.replace(/^---$/gm, '<hr />');
 
-        // Numbered lists (1. item)
+        // Numbered lists (1. item) - parse before bullet
         html = this.parseNumberedLists(html);
 
         // Unordered lists (- item or * item)
         html = this.parseUnorderedLists(html);
 
-        // Line breaks
+        // Line breaks - convert \n to <br />
         html = html.replace(/\n/g, '<br />');
 
         return `<div class="markdown-content">${html}</div>`;
@@ -57,24 +62,26 @@ const MarkdownParser = {
      * @returns {String} HTML with parsed lists
      */
     parseUnorderedLists(html) {
+        // Split by line breaks that we haven't converted yet
         const lines = html.split('<br />');
         let inList = false;
         let result = [];
 
         for (let line of lines) {
-            if (line.match(/^\s*[-*]\s+/)) {
+            const trimmed = line.trim();
+            if (trimmed.match(/^[-*]\s+/)) {
                 if (!inList) {
                     result.push('<ul>');
                     inList = true;
                 }
-                const item = line.replace(/^\s*[-*]\s+/, '');
+                const item = trimmed.replace(/^[-*]\s+/, '');
                 result.push(`<li>${item}</li>`);
             } else {
                 if (inList) {
                     result.push('</ul>');
                     inList = false;
                 }
-                if (line.trim()) {
+                if (trimmed) {
                     result.push(line);
                 }
             }
@@ -95,19 +102,20 @@ const MarkdownParser = {
         let result = [];
 
         for (let line of lines) {
-            if (line.match(/^\s*\d+\.\s+/)) {
+            const trimmed = line.trim();
+            if (trimmed.match(/^\d+\.\s+/)) {
                 if (!inList) {
                     result.push('<ol>');
                     inList = true;
                 }
-                const item = line.replace(/^\s*\d+\.\s+/, '');
+                const item = trimmed.replace(/^\d+\.\s+/, '');
                 result.push(`<li>${item}</li>`);
             } else {
                 if (inList) {
                     result.push('</ol>');
                     inList = false;
                 }
-                if (line.trim()) {
+                if (trimmed) {
                     result.push(line);
                 }
             }
@@ -123,19 +131,9 @@ const MarkdownParser = {
      * @returns {String} Escaped text
      */
     escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        // Don't escape markdown syntax characters during initial pass
-        return text.replace(/[&<>"']/g, m => {
-            // Preserve markdown special chars for later processing
-            if (m === '<' || m === '>') return m; // Keep for potential HTML in markdown
-            return map[m];
-        });
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     },
 
     /**
@@ -149,10 +147,10 @@ const MarkdownParser = {
         return text
             .replace(/```[\s\S]*?```/g, '') // Remove code blocks
             .replace(/`([^`]+)`/g, '$1') // Remove inline code markers
-            .replace(/\*\*([^*]+)\*\*/g, '$1') // Remove bold
-            .replace(/__([^_]+)__/g, '$1')
-            .replace(/\*([^*]+)\*/g, '$1') // Remove italic
-            .replace(/_([^_]+)_/g, '$1')
+            .replace(/\*\*([^*]+?)\*\*/g, '$1') // Remove bold
+            .replace(/__([^_]+?)__/g, '$1')
+            .replace(/\*([^*\n]+?)\*/g, '$1') // Remove italic
+            .replace(/_([^_\n]+?)_/g, '$1')
             .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove link markdown
             .replace(/^[#\s]+/gm, '') // Remove headings
             .replace(/^---$/gm, '') // Remove hr
@@ -161,3 +159,6 @@ const MarkdownParser = {
             .trim();
     }
 };
+
+// Log that module is loaded
+console.log('✅ MarkdownParser module loaded');

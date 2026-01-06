@@ -331,7 +331,7 @@ body {
 }
 
 /* ========================================
-   FLASHCARD
+   FLASHCARD - FIXED FOR MARKDOWN CONTENT
    ======================================== */
 
 .flashcard-section {
@@ -367,12 +367,14 @@ body {
     backface-visibility: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 30px;
     border-radius: 12px;
-    text-align: center;
+    text-align: left;
     box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .flashcard-front {
@@ -387,18 +389,103 @@ body {
 }
 
 .flashcard-label {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 600;
     opacity: 0.8;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    flex-shrink: 0;
 }
 
 .flashcard-content {
-    font-size: 1.5rem;
-    font-weight: 600;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Markdown content inside flashcard - ensure it doesn't overflow */
+.flashcard-content .markdown-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.1rem;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.flashcard-content .markdown-content h1,
+.flashcard-content .markdown-content h2,
+.flashcard-content .markdown-content h3 {
+    font-size: 1.15rem;
+    margin: 5px 0;
+    color: inherit;
+    opacity: 0.95;
+}
+
+.flashcard-content .markdown-content p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.flashcard-content .markdown-content ul,
+.flashcard-content .markdown-content ol {
+    margin: 5px 0;
+    padding-left: 20px;
+    font-size: 1rem;
+}
+
+.flashcard-content .markdown-content li {
+    margin: 2px 0;
+    font-size: 1rem;
+}
+
+.flashcard-content .markdown-content code {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.flashcard-content .markdown-content pre {
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin: 5px 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.flashcard-content .markdown-content pre code {
+    background: none;
+    padding: 0;
+}
+
+.flashcard-content .markdown-content strong {
+    font-weight: 700;
+    opacity: 1;
+}
+
+.flashcard-content .markdown-content em {
+    font-style: italic;
+}
+
+.flashcard-content .markdown-content a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
 }
 
 .flip-hint {
@@ -536,12 +623,14 @@ body {
     font-weight: 600;
     color: var(--dark-color);
     margin-bottom: 8px;
+    word-wrap: break-word;
 }
 
 .card-item-back {
     color: #666;
     font-size: 0.95rem;
     margin-bottom: 12px;
+    word-wrap: break-word;
 }
 
 .card-item-actions {
@@ -663,7 +752,17 @@ body {
     }
 
     .flashcard-content {
-        font-size: 1.2rem;
+        font-size: 1rem;
+    }
+
+    .flashcard-content .markdown-content {
+        font-size: 1rem;
+    }
+
+    .flashcard-content .markdown-content h1,
+    .flashcard-content .markdown-content h2,
+    .flashcard-content .markdown-content h3 {
+        font-size: 1rem;
     }
 
     .study-navigation {
@@ -696,6 +795,25 @@ body {
 
     .spacer {
         width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard {
+        height: 200px;
+    }
+
+    .flashcard-front,
+    .flashcard-back {
+        padding: 20px;
+    }
+
+    .flashcard-content .markdown-content {
+        font-size: 0.9rem;
+    }
+
+    .flashcard-content .markdown-content pre {
+        font-size: 0.7rem;
     }
 }
 

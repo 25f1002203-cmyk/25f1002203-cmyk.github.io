@@ -5,10 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Manager - Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .header-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        #syncStatus {
+            padding: 6px 12px;
+            background: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
+            <div class="header-right">
+                <div id="syncStatus">⏳ Loading...</div>
+            </div>
             <h1>📚 Flashcard Manager</h1>
             <p class="subtitle">Study smarter with interactive flashcards</p>
         </header>
@@ -52,7 +74,11 @@
         </div>
     </div>
 
-    <script src="js/storage.js"></script>
+    <!-- Load Supabase client first -->
+    <script src="js/supabase-client.js"></script>
+    <!-- Then load hybrid storage -->
+    <script src="js/storage-supabase.js"></script>
+    <!-- Finally load app -->
     <script src="js/app.js"></script>
 </body>
 </html>
