@@ -1,5 +1,21 @@
 # 🚀 Quick Start - Supabase Setup (5 minutes)
 
+## 🔐 IMPORTANT: API Key Fix
+
+**If you see this error:**
+```
+401 Unauthorized
+No API key found in request
+```
+
+**Solution**: Hard refresh your browser
+- **Windows**: `Ctrl+Shift+R`
+- **Mac**: `Cmd+Shift+R`
+
+This loads the latest code with the API key fix. See `API_KEY_FIX.md` for details.
+
+---
+
 ## Step 1: Create Database Tables (2 minutes)
 
 Open [Supabase SQL Editor](https://cnevpevsnslzowfbfzwe.supabase.co/sql/new)
@@ -54,22 +70,39 @@ You should see:
 
 ## Step 3: Test It (2 minutes)
 
+### Hard Refresh First!
+```
+Ctrl+Shift+R  (Windows)
+Cmd+Shift+R   (Mac)
+```
+
 ### Open the app:
 https://seenivasan.me/flashcards/
 
-### Look for sync status (top-right):
-- 🟢 "Synced" = Working!
-- 🔴 "Error" = Check troubleshooting below
+### Check browser console (F12):
+Look for:
+```
+✅ Supabase connection successful
+✅ Loaded from Supabase
+```
+
+NOT:
+```
+❌ No API key found in request
+```
 
 ### Create a test deck:
-1. Enter deck name
+1. Enter deck name (e.g., "Test Deck")
 2. Click "+ Create Deck"
 3. Wait 1 second
+
+### Check sync status (top-right):
+Should show: **✅ Synced** (green)
 
 ### Verify in Supabase:
 1. Go to Supabase Dashboard
 2. Click "Tables" → "decks"
-3. Your deck should appear!
+3. Your test deck appears?
 
 ✅ **Success!** Data is syncing!
 
@@ -77,41 +110,55 @@ https://seenivasan.me/flashcards/
 
 ## Troubleshooting
 
-### Sync shows 🔴 Error
+### Issue: Still seeing 401 error
 
-**Check 1**: Open browser console (F12)
+**Solution 1**: Hard refresh again
+```
+Ctrl+Shift+R (Windows)
+Cmd+Shift+R (Mac)
+```
+
+**Solution 2**: Clear browser cache
+- Chrome: Settings → Clear browsing data
+- Firefox: Options → Privacy → Clear Data
+- Safari: Develop → Empty Caches
+
+**Solution 3**: Check tables exist
+1. Supabase → Tables
+2. See `decks` and `cards` tables?
+3. Both have lock icon?
+4. If not, run SQL from Step 1
+
+### Issue: Sync shows 🔴 Error
+
+**Check 1**: Open console (F12)
 - What error message?
-- Copy it and search
+- Share it for debugging
 
-**Check 2**: Verify tables exist
-- Supabase → Tables
-- See `decks` and `cards`?
+**Check 2**: Verify RLS policies
+1. Supabase → Tables → decks
+2. Click "Authentication"
+3. See policy "Allow public access"?
+4. Is it enabled?
 
-**Check 3**: Verify RLS enabled
-- Supabase → Tables → decks
-- Click "Authentication" tab
-- See policies enabled?
+**Check 3**: Test connection manually
+```javascript
+// In browser console, type:
+fetch('https://cnevpevsnslzowfbfzwe.supabase.co/rest/v1/decks', {
+    headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+    }
+}).then(r => r.json()).then(d => console.log(d))
+```
 
-**Check 4**: Clear browser cache
-- Hard refresh: Ctrl+Shift+R (Windows)
-- Or: Cmd+Shift+R (Mac)
+### Issue: No tables created
 
-### Table "not found" error
-
-**Solution**: Run SQL schema creation above in SQL Editor
-
-### Firewall blocking
-
-**Check**: Do you have internet access to Supabase?
-- Try: curl https://cnevpevsnslzowfbfzwe.supabase.co
-- Should respond
-
-### Still not working?
-
-1. Open browser console (F12)
-2. Copy ALL error messages
-3. Check documentation: `SUPABASE_SETUP_COMPLETE.md`
-4. See troubleshooting section
+**Solution**: Run SQL from Step 1 again
+1. Go to Supabase SQL Editor
+2. Copy entire SQL block
+3. Paste and click Run
+4. Check "Output" tab for errors
 
 ---
 
@@ -122,7 +169,7 @@ https://seenivasan.me/flashcards/
 ```
 You create deck
   ↓
-💾 Saved to browser storage (INSTANT)
+💾 Saved to browser (INSTANT)
   ↓
 🚀 Syncs to Supabase in background (1-5 sec)
   ↓
@@ -131,10 +178,14 @@ You create deck
 
 ### Why this is cool:
 
-✅ **Instant feedback** - No waiting
+✅ **Instant feedback** - No waiting for server
+
 ✅ **Works offline** - Internet optional
+
 ✅ **Auto backup** - Data in cloud
+
 ✅ **Cross-device** - Use on phone/tablet/laptop
+
 ✅ **Shareable** - All data is public
 
 ---
@@ -204,7 +255,7 @@ StorageManager.clearAll(); // Clears browser cache
 
 **Still confused?**
 
-1. Check browser console for errors (F12)
+1. Check `API_KEY_FIX.md` for detailed debugging
 2. Read `SUPABASE_SETUP_COMPLETE.md` troubleshooting
 3. Check Supabase docs: https://supabase.com/docs
 4. Open GitHub issue
