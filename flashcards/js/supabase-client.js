@@ -14,11 +14,19 @@ class SupabaseClient {
     constructor(url, anonKey) {
         this.url = url;
         this.anonKey = anonKey;
+        // Include BOTH Authorization header AND apikey header
         this.headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${anonKey}`,
+            'apikey': anonKey,  // Supabase also expects this header
             'Prefer': 'return=representation'
         };
+        console.log('SupabaseClient initialized with headers:', {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${anonKey.substring(0, 20)}...`,
+            'apikey': anonKey.substring(0, 20) + '...',
+            'Prefer': 'return=representation'
+        });
     }
 
     /**
@@ -42,6 +50,7 @@ class SupabaseClient {
         }
 
         try {
+            console.log(`Supabase ${method} request:`, url);
             const response = await fetch(url, options);
             
             if (!response.ok) {
@@ -112,8 +121,9 @@ const supabase = new SupabaseClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Test connection
 async function testSupabaseConnection() {
     try {
+        console.log('Testing Supabase connection...');
         const result = await supabase.select('decks', '?limit=1');
-        console.log('✅ Supabase connection successful');
+        console.log('✅ Supabase connection successful:', result);
         return true;
     } catch (error) {
         console.error('❌ Supabase connection failed:', error.message);
@@ -129,7 +139,7 @@ if (typeof window !== 'undefined') {
                 // Show sync indicator
                 const syncIndicator = document.getElementById('syncStatus');
                 if (syncIndicator) {
-                    syncIndicator.textContent = '🟢 Synced';
+                    syncIndicator.textContent = '✅ Synced';
                     syncIndicator.style.color = '#2dce89';
                 }
             }
