@@ -12,38 +12,59 @@
     line-height: 1.6;
 }
 
-/* Hide markdown horizontal rules (---) */
+/* Hide all br tags that create excessive spacing */
+.markdown-content br {
+    display: none !important;
+}
+
+/* Hide markdown horizontal rules (---) and hr elements */
 .markdown-content > hr,
 .markdown-content hr {
     display: none !important;
 }
 
-/* Reduce excessive spacing after headings */
+/* Remove excessive margins from all elements */
+.markdown-content * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Set proper spacing for headings */
 .markdown-content h3 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.4rem;
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.4rem !important;
     font-size: 1.1rem;
     font-weight: 600;
 }
 
 .markdown-content h4 {
-    margin-top: 0.6rem;
-    margin-bottom: 0.3rem;
+    margin-top: 0.6rem !important;
+    margin-bottom: 0.3rem !important;
     font-size: 1rem;
     font-weight: 600;
 }
 
-/* Reduce paragraph spacing */
+/* Set proper spacing for paragraphs and text */
 .markdown-content p {
-    margin-top: 0.3rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.5rem !important;
     font-size: 0.95rem;
+}
+
+.markdown-content em,
+.markdown-content i {
+    font-style: italic;
+}
+
+.markdown-content strong,
+.markdown-content b {
+    font-weight: 600;
 }
 
 /* Code blocks spacing */
 .markdown-content pre {
-    margin-top: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
     padding: 0.75rem;
     background-color: #f5f5f5;
     border-radius: 4px;
@@ -65,33 +86,22 @@
     padding: 0;
 }
 
-/* Strong and emphasis spacing */
-.markdown-content strong,
-.markdown-content b {
-    font-weight: 600;
-}
-
-.markdown-content em,
-.markdown-content i {
-    font-style: italic;
-}
-
 /* Lists */
 .markdown-content ul,
 .markdown-content ol {
-    margin-top: 0.3rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.3rem !important;
+    margin-bottom: 0.5rem !important;
     padding-left: 1.5rem;
 }
 
 .markdown-content li {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.25rem !important;
 }
 
 /* Blockquotes */
 .markdown-content blockquote {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
     margin-left: 0;
     padding-left: 0.75rem;
     border-left: 3px solid #ddd;
@@ -101,8 +111,8 @@
 
 /* Tables */
 .markdown-content table {
-    margin-top: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
     border-collapse: collapse;
     font-size: 0.9rem;
 }
@@ -118,7 +128,7 @@
     font-weight: 600;
 }
 
-/* Scrollbar styling (Webkit browsers) */
+/* Scrollbar styling (Webkit browsers - Chrome, Safari, Edge) */
 .markdown-content::-webkit-scrollbar {
     width: 8px;
 }
@@ -146,10 +156,20 @@
 
 /* Remove extra margin from first child */
 .markdown-content > :first-child {
-    margin-top: 0;
+    margin-top: 0 !important;
 }
 
 /* Remove extra margin from last child */
 .markdown-content > :last-child {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
+}
+
+/* Compact inline elements - no extra spacing */
+.markdown-content span {
+    margin: 0 !important;
+}
+
+/* Fix div wrapper margins */
+.markdown-content > div {
+    margin: 0 !important;
 }
