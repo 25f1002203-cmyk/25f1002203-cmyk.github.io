@@ -1,10 +1,11 @@
 /* ===================================
    Markdown Content Card Styling Fix
-   Option 3: Hide excess elements + Add scroll
+   Targets: .flashcard-content in study.html
    =================================== */
 
-/* Main container with scrolling */
-.markdown-content {
+/* Main container with scrolling - for both markdown-content and flashcard-content */
+.markdown-content,
+.flashcard-content {
     max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -13,31 +14,37 @@
 }
 
 /* Hide all br tags that create excessive spacing */
-.markdown-content br {
+.markdown-content br,
+.flashcard-content br {
     display: none !important;
 }
 
 /* Hide markdown horizontal rules (---) and hr elements */
 .markdown-content > hr,
-.markdown-content hr {
+.markdown-content hr,
+.flashcard-content > hr,
+.flashcard-content hr {
     display: none !important;
 }
 
-/* Remove excessive margins from all elements */
-.markdown-content * {
+/* Remove excessive margins from all elements within these containers */
+.markdown-content *,
+.flashcard-content * {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
 
 /* Set proper spacing for headings */
-.markdown-content h3 {
+.markdown-content h3,
+.flashcard-content h3 {
     margin-top: 0.75rem !important;
     margin-bottom: 0.4rem !important;
     font-size: 1.1rem;
     font-weight: 600;
 }
 
-.markdown-content h4 {
+.markdown-content h4,
+.flashcard-content h4 {
     margin-top: 0.6rem !important;
     margin-bottom: 0.3rem !important;
     font-size: 1rem;
@@ -45,24 +52,30 @@
 }
 
 /* Set proper spacing for paragraphs and text */
-.markdown-content p {
+.markdown-content p,
+.flashcard-content p {
     margin-top: 0.3rem !important;
     margin-bottom: 0.5rem !important;
     font-size: 0.95rem;
 }
 
 .markdown-content em,
-.markdown-content i {
+.markdown-content i,
+.flashcard-content em,
+.flashcard-content i {
     font-style: italic;
 }
 
 .markdown-content strong,
-.markdown-content b {
+.markdown-content b,
+.flashcard-content strong,
+.flashcard-content b {
     font-weight: 600;
 }
 
 /* Code blocks spacing */
-.markdown-content pre {
+.markdown-content pre,
+.flashcard-content pre {
     margin-top: 0.5rem !important;
     margin-bottom: 0.75rem !important;
     padding: 0.75rem;
@@ -73,7 +86,8 @@
     line-height: 1.4;
 }
 
-.markdown-content code {
+.markdown-content code,
+.flashcard-content code {
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
     background-color: #f0f0f0;
@@ -81,25 +95,30 @@
     border-radius: 3px;
 }
 
-.markdown-content pre code {
+.markdown-content pre code,
+.flashcard-content pre code {
     background-color: transparent;
     padding: 0;
 }
 
 /* Lists */
 .markdown-content ul,
-.markdown-content ol {
+.markdown-content ol,
+.flashcard-content ul,
+.flashcard-content ol {
     margin-top: 0.3rem !important;
     margin-bottom: 0.5rem !important;
     padding-left: 1.5rem;
 }
 
-.markdown-content li {
+.markdown-content li,
+.flashcard-content li {
     margin-bottom: 0.25rem !important;
 }
 
 /* Blockquotes */
-.markdown-content blockquote {
+.markdown-content blockquote,
+.flashcard-content blockquote {
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
     margin-left: 0;
@@ -110,7 +129,8 @@
 }
 
 /* Tables */
-.markdown-content table {
+.markdown-content table,
+.flashcard-content table {
     margin-top: 0.5rem !important;
     margin-bottom: 0.75rem !important;
     border-collapse: collapse;
@@ -118,58 +138,70 @@
 }
 
 .markdown-content table th,
-.markdown-content table td {
+.markdown-content table td,
+.flashcard-content table th,
+.flashcard-content table td {
     border: 1px solid #ddd;
     padding: 0.5rem;
 }
 
-.markdown-content table th {
+.markdown-content table th,
+.flashcard-content table th {
     background-color: #f5f5f5;
     font-weight: 600;
 }
 
 /* Scrollbar styling (Webkit browsers - Chrome, Safari, Edge) */
-.markdown-content::-webkit-scrollbar {
+.markdown-content::-webkit-scrollbar,
+.flashcard-content::-webkit-scrollbar {
     width: 8px;
 }
 
-.markdown-content::-webkit-scrollbar-track {
+.markdown-content::-webkit-scrollbar-track,
+.flashcard-content::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
 }
 
-.markdown-content::-webkit-scrollbar-thumb {
+.markdown-content::-webkit-scrollbar-thumb,
+.flashcard-content::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 10px;
     transition: background 0.3s ease;
 }
 
-.markdown-content::-webkit-scrollbar-thumb:hover {
+.markdown-content::-webkit-scrollbar-thumb:hover,
+.flashcard-content::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
 /* Firefox scrollbar */
-.markdown-content {
+.markdown-content,
+.flashcard-content {
     scrollbar-color: #888 #f1f1f1;
     scrollbar-width: thin;
 }
 
 /* Remove extra margin from first child */
-.markdown-content > :first-child {
+.markdown-content > :first-child,
+.flashcard-content > :first-child {
     margin-top: 0 !important;
 }
 
 /* Remove extra margin from last child */
-.markdown-content > :last-child {
+.markdown-content > :last-child,
+.flashcard-content > :last-child {
     margin-bottom: 0 !important;
 }
 
 /* Compact inline elements - no extra spacing */
-.markdown-content span {
+.markdown-content span,
+.flashcard-content span {
     margin: 0 !important;
 }
 
 /* Fix div wrapper margins */
-.markdown-content > div {
+.markdown-content > div,
+.flashcard-content > div {
     margin: 0 !important;
 }
