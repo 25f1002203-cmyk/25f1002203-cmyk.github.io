@@ -13,6 +13,10 @@ const MarkdownParser = {
         if (!text || typeof text !== 'string') return '<p>No content</p>';
 
         let html = text;
+            
+    // Preprocess content to remove decorative HTML patterns
+    html = this.preprocessContent(html);
+        
 
         // First escape HTML to prevent injection
         html = this.escapeHtml(html);
@@ -144,6 +148,27 @@ const MarkdownParser = {
         div.textContent = text;
         return div.innerHTML;
     },
+
+     /**
+   * Preprocess content to remove decorative HTML patterns
+   * Removes: HTML tags, multiple br/hr tags, decorative dividers
+   * @param {String} text - Text with decorative HTML patterns
+   * @returns {String} Cleaned text
+   */
+  preprocessContent(text) {
+    if (!text) return text;
+    
+    // Remove HTML tags but preserve content
+    let cleaned = text.replace(/<[^>]*>/g, '');
+    
+    // Remove multiple consecutive spaces/newlines
+    cleaned = cleaned.replace(/\s{2,}/g, ' ');
+    
+    // Remove leading/trailing whitespace
+    cleaned = cleaned.trim();
+    
+    return cleaned;
+  },
 
     /**
      * Strip markdown formatting and return plain text
