@@ -159,8 +159,8 @@ const MarkdownParser = {
     if (!text) return text;
     
     // Remove HTML tags but preserve content
-    let cleaned = text.replace(/<[^>]*>/g, '');
-    
+let cleaned = text.replace(/<(?!br\s*\/?)[^>]*>/g, '');
+      
     // Remove multiple consecutive spaces/newlines
     cleaned = cleaned.replace(/\s{2,}/g, ' ');
     
