@@ -332,7 +332,7 @@
 .flashcard-content .markdown-content {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow-wrap: break-word;
