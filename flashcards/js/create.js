@@ -5,6 +5,7 @@
 let currentDeckId = sessionStorage.getItem('currentDeckId');
 let editingCardId = null;
 let allCards = [];
+let storageReady = false;
 
 // Get DOM elements
 const pageTitle = document.getElementById('pageTitle');
@@ -30,6 +31,32 @@ let cardToDelete = null;
  * Initialize the page
  */
 function init() {
+    // Wait for storage to be ready before loading
+    waitForStorageReady();
+}
+
+/**
+ * Wait for storage manager to be ready
+ */
+function waitForStorageReady() {
+    // Check if StorageManager has been initialized
+    if (!window.StorageManager) {
+        // Storage manager not loaded yet, wait and retry
+        setTimeout(waitForStorageReady, 100);
+        return;
+    }
+
+    // Give storage manager a moment to initialize
+    setTimeout(() => {
+        storageReady = true;
+        loadDeck();
+    }, 500);
+}
+
+/**
+ * Load the deck and cards
+ */
+function loadDeck() {
     if (!currentDeckId) {
         alert('No deck selected');
         window.location.href = 'index.html';
@@ -44,7 +71,7 @@ function init() {
     }
 
     pageTitle.textContent = `Add Cards to ${deck.name}`;
-    allCards = [...deck.cards];
+    allCards = deck.cards ? [...deck.cards] : [];
     
     renderCards();
     setupEventListeners();
@@ -146,7 +173,7 @@ function createCardItem(card) {
             </div>
             <div class="card-item-actions">
                 <button id="toggle-${card.id}" class="btn btn-outline btn-sm">👁️ Preview</button>
-                <button id="edit-${card.id}" class="btn btn-secondary btn-sm">퉰f️ Edit</button>
+                <button id="edit-${card.id}" class="btn btn-secondary btn-sm">✏️ Edit</button>
                 <button id="delete-${card.id}" class="btn btn-danger btn-sm">🗑️</button>
             </div>
         </div>

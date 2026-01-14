@@ -13,13 +13,37 @@ const cancelBtn = document.getElementById('cancelBtn');
 const confirmMessage = document.getElementById('confirmMessage');
 
 let deckToDelete = null;
+let storageReady = false;
 
 /**
  * Initialize the app on page load
  */
 function init() {
-    renderDecks();
     setupEventListeners();
+    // Wait for storage to be initialized
+    waitForStorageReady();
+}
+
+/**
+ * Wait for storage manager to be ready, then render decks
+ */
+function waitForStorageReady() {
+    // Check if StorageManager has been initialized
+    if (!window.StorageManager) {
+        // Storage manager not loaded yet, wait and retry
+        setTimeout(waitForStorageReady, 100);
+        return;
+    }
+
+    // Give storage manager a moment to initialize
+    setTimeout(() => {
+        storageReady = true;
+        renderDecks();
+        
+        // Set up an interval to periodically refresh deck list
+        // This helps catch updates from other tabs
+        setInterval(renderDecks, 2000);
+    }, 500);
 }
 
 /**
@@ -57,6 +81,10 @@ function handleCreateDeck() {
  * Render all decks on the page
  */
 function renderDecks() {
+    if (!storageReady || !window.StorageManager) {
+        return; // Not ready yet
+    }
+
     const decks = StorageManager.getDecks();
     
     if (!decks || decks.length === 0) {
@@ -84,7 +112,7 @@ function renderDecks() {
  * @returns {String} HTML string for the deck card
  */
 function createDeckCard(deck) {
-    const cardCount = deck.cards.length;
+    const cardCount = deck.cards ? deck.cards.length : 0;
     const stats = StorageManager.getStats(deck.id);
     
     return `
@@ -98,7 +126,7 @@ function createDeckCard(deck) {
             </div>
             <div class="deck-actions">
                 <button id="edit-${deck.id}" class="btn btn-secondary">✏️ Edit</button>
-                <button id="study-${deck.id}" class="btn btn-primary">📖 Study</button>
+                <button id="study-${deck.id}" class="btn btn-primary">📆 Study</button>
                 <button id="delete-${deck.id}" class="btn btn-danger">🗑️</button>
             </div>
         </div>
@@ -121,7 +149,7 @@ function editDeck(deckId) {
  */
 function studyDeck(deckId) {
     const deck = StorageManager.getDeck(deckId);
-    if (deck.cards.length === 0) {
+    if (!deck || !deck.cards || deck.cards.length === 0) {
         alert('No cards in this deck yet. Add some cards first!');
         editDeck(deckId);
         return;

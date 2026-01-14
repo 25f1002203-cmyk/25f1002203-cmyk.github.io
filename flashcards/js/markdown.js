@@ -53,6 +53,15 @@ const MarkdownParser = {
         // Line breaks - convert \n to <br />
         html = html.replace(/\n/g, '<br />');
 
+        // Clean up multiple consecutive <br /> tags - replace 2+ with single <br />
+        html = html.replace(/(<br \/>){2,}/g, '<br />');
+
+        // Clean up multiple consecutive <hr /> tags
+        html = html.replace(/(<hr \/>){2,}/g, '<hr />');
+
+        // Remove <br /> immediately before or after <hr />
+        html = html.replace(/<br \/><hr \/>|<hr \/><br \/>/g, '<hr />');
+
         return `<div class="markdown-content">${html}</div>`;
     },
 
@@ -151,7 +160,7 @@ const MarkdownParser = {
             .replace(/__([^_]+?)__/g, '$1')
             .replace(/\*([^*\n]+?)\*/g, '$1') // Remove italic
             .replace(/_([^_\n]+?)_/g, '$1')
-            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove link markdown
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1') // Remove link markdown
             .replace(/^[#\s]+/gm, '') // Remove headings
             .replace(/^---$/gm, '') // Remove hr
             .replace(/^\s*[-*]\s+/gm, '') // Remove list markers
